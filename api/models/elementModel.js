@@ -1,7 +1,13 @@
 //pour sauvegarder les messages en bdd
 const connection = require('./../db.js');
 
-// Classe Message
+// import of uniqid
+const uniqid = require('uniqid');
+
+// import md5
+const md5 = require('md5');
+
+// Classe Element
 var Element = function(id, name, html, createdAt, updatedAt) {
     // Propriété publique
     this.id = id;
@@ -62,20 +68,20 @@ Element.prototype.createElement = function() {
 
     let element = this;
 
-    console.log(element)
+    console.log(uniqid());
 
     return new Promise(function(resolve, reject){
 
-        var sql = `INSERT INTO elements
+        let sql = `INSERT INTO elements
         (id, name, html, createdAt, updatedAt)
-        VALUES (NULL, ?, ?, NOW(), NOW())`;
+        VALUES ('${uniqid()}', ?, ?, NOW(), NOW())`;
 
         connection.query(sql,[element.name, element.html], function (error, results) {
             if (error) {
                 //on rejette la promise
                 reject(error);
             }
-            console.log(results);
+            console.log("request injected : " + results);
             element.id = results.insertId;
             //on la resolve
             resolve(element);
@@ -89,7 +95,7 @@ Element.prototype.updateElement = function() {
 
     return new Promise(function(resolve, reject){
 
-        var sql = `UPDATE elements
+        let sql = `UPDATE elements
         SET name = ?, 
         html = ?,
         updatedAt = NOW()
@@ -112,7 +118,7 @@ Element.prototype.deleteElement = function() {
 
     return new Promise(function(resolve, reject){
 
-        var sql = `DELETE FROM elements
+        let sql = `DELETE FROM elements
         WHERE id = ?`;
 
         connection.query(sql,[element.id], function (error, results) {

@@ -1,13 +1,13 @@
-var Element = require('./../models/elementModel.js');
+var User = require('./../models/userModel.js');
 
-const elementController = {
-  getElements: function(req, res){
+const userController = {
+  getUsers: function(req, res){
 
-      var element = new Element('', '', '', '', '');
+      var user = new User('', '', '', '', '', '');
 
-      elementPromise = element.getElements(); 
+      userPromise = user.getUsers(); 
 
-      elementPromise
+      userPromise
       .then(function(results){
           res.json(results);
       })
@@ -15,35 +15,31 @@ const elementController = {
           res.send(reason);
       })
   },
-  readElement: function(req, res){
+  readUser: function(req, res){
 
-    console.log(req.params.elementId + " : req.body.name");
+    console.log(req.params.userLogin + " : req.body.name");
 
-      let elementId = req.params.elementId;
+      let userLogin = req.params.userLogin;
 
-      var element = new Element(elementId, '', '', '', '');
+      var user = new User('', '', '', userLogin, '', '');
 
-      elementPromise = element.readElement(); 
+      userPromise = user.readUser(); 
 
-      elementPromise
+      userPromise
       .then(function(results){
-          console.log("Ca marche");
           res.json(results);
       })
       .catch(function(reason){
-          console.log("Ca marche pas");
           res.send(reason);
       })
   },
-  createElement: function(req, res){
+  createUser: function(req, res){
 
-    console.log(req.body.name + " : req.body.name");
+    let user = new User('', req.body.firstName, req.body.lastName, req.body.email, req.body.password, '');
 
-    let element = new Element('', req.body.name, req.body.html, '', '');
+    userPromise = user.createUser(); 
 
-    elementPromise = element.createElement(); 
-
-    elementPromise
+    userPromise
     .then(function(results){
         res.json(results);
     })
@@ -51,13 +47,13 @@ const elementController = {
         res.send(reason);
     })
   },
-  updateElement: function(req, res){
+  updateUser: function(req, res){
 
-    let element = new Element(req.body);
+    let user = new User(req.body.id, req.body.firstName, req.body.lastName, req.body.email, req.body.password, req.body.createdAt);
 
-    elementPromise = element.updatedElement(); 
+    userPromise = user.updateUser(); 
 
-    elementPromise
+    userPromise
     .then(function(results){
         res.json(results);
     })
@@ -65,15 +61,15 @@ const elementController = {
         res.send(reason);
     })
   },
-  deleteElement: function(req, res){
+  deleteUser: function(req, res){
     
-        let elementId = req.params.elementId;
+        let userId = req.params.userId;
 
-        var element = new Element(elementId, '', '', '', '');
+        var user = new User(userId, '', '', '', '');
     
-        elementPromise = element.deleteElement(); 
+        userPromise = user.deleteUser(); 
     
-        elementPromise
+        userPromise
         .then(function(results){
             res.json(results);
         })
@@ -83,11 +79,11 @@ const elementController = {
       }
 }
 
-module.exports = elementController;
+module.exports = userController;
 
 
 /*
-exports.createElement = function(req, res) {
+exports.createUser = function(req, res) {
 var new_task = new Task(req.body);
 new_task.save(function(err, task) {
   if (err)
@@ -97,7 +93,7 @@ new_task.save(function(err, task) {
 };
 
 
-exports.readElement = function(req, res) {
+exports.readUser = function(req, res) {
 Task.findById(req.params.taskId, function(err, task) {
   if (err)
     res.send(err);
