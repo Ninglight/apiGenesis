@@ -1,7 +1,7 @@
-<div style="text-align:center"><img style="width:200px;" src ="img/logo.svg" alt="logoGenesis"/></div>
+![logoGenesis](img/logo.svg =200x)
 
-# apiGenesis
+# api<span style="color:#A79CB4">Genesis</span>
 
 This API REST is a element from the Genesis Project.
 
-<div style="text-align:center"><img style="width:500px;" src ="img/architecture.svg" alt="architectureGenesis"/></div>
+![architecture](img/architecture.svg =500x)
